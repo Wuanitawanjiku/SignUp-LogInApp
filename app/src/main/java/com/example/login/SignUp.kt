@@ -29,7 +29,7 @@ class SignUp : AppCompatActivity() {
         etName = findViewById(R.id.etName)
         spGender = findViewById(R.id.spGender)
         val gender = arrayOf("Male", "Female", "Prefer not to say")
-        var genderAdapter = ArrayAdapter<String>(baseContext, android.R.layout.simple_spinner_item, gender)
+        val genderAdapter = ArrayAdapter<String>(baseContext, android.R.layout.simple_spinner_item, gender)
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spGender.adapter = genderAdapter
 
@@ -45,35 +45,21 @@ class SignUp : AppCompatActivity() {
 
     fun clickRegister() {
         btnSignUp.setOnClickListener {
-
-        var name = etName.text.toString()
-        if (name.isEmpty()){
+            var gender = spGender.selectedItem.toString()
+        if (etName.text.toString().isEmpty()||etEmail.text.toString().isEmpty()||etPhoneNumber.text.toString().isEmpty()||
+            etPassword.text.toString().isEmpty()){
             etName.setError("Name required")
-        }
-
-        var gender = spGender.selectedItem.toString()
-
-
-        var email = etEmail.text.toString()
-        if (email.isEmpty()){
             etEmail.setError("Input email to continue")
-        }
-
-        var phoneNumber = etPhoneNumber.text.toString()
-        if (phoneNumber.isEmpty()){
             etPhoneNumber.setError("Phone number is required")
+            etPassword.setError("Password is Required")
+        }
+        else{
+            val accountDetails = AccountDetails(name = etName.text.toString(), gender = "", email = etEmail.text.toString(),
+                phoneNumber = etPhoneNumber.text.toString(), password = etPassword.text.toString())
+            Toast.makeText(baseContext,accountDetails.toString(), Toast.LENGTH_LONG).show()
         }
 
-        var password = etPassword.text.toString()
-        if (password.isEmpty()) {
-            etPassword.setError("Input password")
         }
-
-        var accountDetails = AccountDetails(name = name, gender = "", email = email,
-        phoneNumber = phoneNumber, password = password)
-
-    Toast.makeText(baseContext,accountDetails.toString(), Toast.LENGTH_LONG).show()
-}
 
 
         btnLogIn.setOnClickListener {
